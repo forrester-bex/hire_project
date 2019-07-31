@@ -13,7 +13,7 @@ temp <- rgamma(num, shape = alpha_vec, rate = 1)
 return(temp / sum(temp))
 }
 #number of samples
-n <- 180
+n <- 300
 
 #assignment of discrete phenotype 
 
@@ -26,7 +26,7 @@ n2 <- (2*(n/3))
 # Generating cell lineages
 #################################################################################################
 m <- 10000   #number of CpG sites
-K <- 3       #underlying cell type number
+K <- 5       #underlying cell type number
 
 #methylation profiles
 #assume cell type 1 and cell type 2 are from the same lineage
@@ -38,7 +38,9 @@ ind <- sample(seq_len(m), m/5)
 methy2[ind] <- rbeta(length(ind),3,6)
 #cell type 3
 methy3 <- rbeta(m,3,6)
-mu <- cbind(methy1, methy2, methy3)
+methy4 <- rbeta(m,3,6)
+methy5 <- rbeta(m,3,6)
+mu <- cbind(methy1, methy2, methy3, methy4, methy5)
 
 #################################################################################################
 #Discrete and continuous phenotypes
@@ -101,9 +103,9 @@ runif(m_seperate, min=min_signal, max=max_signal)
 
 P <- vapply(seq_len(n), function(i){
 if(X[1,i]==0){ #if control
-rDirichlet(c(4,4, 2+X[2,i]/10))
+rDirichlet(c(3, 3, 3, 3, 2+X[2,i]/10)
 }else{
-rDirichlet(c(4,4, 5+X[2,i]/10))
+rDirichlet(c(3, 3, 3, 3, 5+X[2,i]/10))
 }
 }, FUN.VALUE = rep(-1, 3))
 
@@ -131,14 +133,14 @@ ret_list <- HIRE(Ometh, X, num_celltype=K)
 #case vs control
 #Visualize the association pattern with the case/control status in the first 100 CpG sites 
 #write output to pdf
-pdf("casecontrolstatus.pdf")
+pdf("5K180n_casecontrolstatus.pdf")
 riskCpGpattern(ret_list$pvalues[seq_len(100), c(2,1,3)],
 main_title="Detected association pattern\n with disease status", hc_row_ind = FALSE) #c(2,1,3) was used because of the label switching
 dev.off()
 #age
 #Visualize the association pattern with the age in the first 100 CpG sites
 #write output to pdf
-pdf("age.pdf")
+pdf("5K180n_age.pdf")
 riskCpGpattern(ret_list$pvalues[seq_len(100), K+c(2,1,3)],
     main_title="Detected association pattern\n with age", hc_row_ind = FALSE)
 dev.off()
@@ -147,7 +149,7 @@ dev.off()
 #write output to pdf
     pvalues <- matrix(runif(600), 100, 6)
     #Visualize this p-value matrix
-    pdf("pvalues.pdf")
+    pdf("5K180n_pvalues.pdf")
     riskCpGpattern(pvalues,
     main_title="An example", hc_row_ind = FALSE)
     dev.off()
