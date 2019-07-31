@@ -95,11 +95,19 @@ Ometh[Ometh < 0] <- 0
 ################################################################################################
 #return list by HIRE
 ret_list <- HIRE(Ometh, X, num_celltype=K)
+
 #case vs control
-#Visualize the association pattern with the case/control status in the first 100 CpG sites riskCpGpattern(ret_list$pvalues[seq_len(100), c(2,1,3)],
+#Visualize the association pattern with the case/control status in the first 100 CpG sites 
+riskCpGpattern(ret_list$pvalues[seq_len(100), c(2,1,3)],
 main_title="Detected association pattern\n with disease status", hc_row_ind = FALSE) #c(2,1,3) was used because of the label switching
 #age
 #Visualize the association pattern with the age in the first 100 CpG sites
-
 riskCpGpattern(ret_list$pvalues[seq_len(100), K+c(2,1,3)],
     main_title="Detected association pattern\n with age", hc_row_ind = FALSE)
+
+
+#a p-value matrix from the uniform distribution
+    pvalues <- matrix(runif(600), 100, 6)
+    #Visualize this p-value matrix
+    riskCpGpattern(pvalues,
+    main_title="An example", hc_row_ind = FALSE)
