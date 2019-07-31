@@ -1,0 +1,50 @@
+login to a login node
+ssh ...@email.co.uk
+
+create a screen session:
+screen -S project
+
+request an interactive session (16 processors on 1 node for 4 hours):
+ qsub -I -l nodes=1:ppn=16,walltime=04:00:00
+ module add languages/R-3.5.1-ATLAS-gcc-6.1
+module add tools/git-1.8.4.2 
+
+To submit a script job:
+qsub -l nodes=1:ppn=16,walltime=04:00:00 script.sh
+
+You can see what other modules are available: module avail
+
+start R:
+R
+
+work, work, work
+
+quit working but let the session keep running in the background
+Ctrl A + d ('Ctrl A' and then 'd')
+
+List the sessions you have:
+screen -ls
+
+Reopen a session that is running that was named 'project':
+screen -dr project
+
+Create a new window in a screen session:
+Ctrl A + c
+
+Cycle between windows in a screen session:
+Ctrl A + n
+
+To delete a windows in a screen session, just type 'exit' at the prompt. 
+
+A screen session is terminated when the last window in the session has been deleted.
+
+
+# geograbber
+library(geograbi)
+samples <- geograbi.get.samples("GSE35069")
+meth <- geograbi.get.data("GSE35069")
+
+
+
+
+
