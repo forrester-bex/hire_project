@@ -7,7 +7,7 @@ screen -S project
 request an interactive session (16 processors on 1 node for 4 hours):
  qsub -I -l nodes=1:ppn=16,walltime=04:00:00
 module add languages/R-3.5.1-ATLAS-gcc-6.1
-module add tools/git-1.8.4.2 
+module add tools/git-2.22.0
 
 To submit a script job:
 qsub -l nodes=1:ppn=16,walltime=04:00:00 script.ssh
@@ -37,6 +37,10 @@ Ctrl A + n
 To delete a windows in a screen session, just type 'exit' at the prompt. 
 
 A screen session is terminated when the last window in the session has been deleted.
+
+
+To skill a screen session:
+screen -X -S SCREENID kill
 
 
 
