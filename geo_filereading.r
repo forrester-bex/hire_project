@@ -1,6 +1,15 @@
-# load in gzipped file
-myfile <- gzfile('file.csv.gz', 'rt')
+# HIRE requires a methylation matrix where one row corresponds to a CpG site
+# and one column represents a sample
 
-# read gzipped file
+# geograbber
+library(geograbi)
+samples <- geograbi.get.samples("GSE35069")
+meth <- geograbi.get.data("GSE35069")
+data <- read.delim(myfile)
 
-data <- read.csv(myfile, header=F)
+
+# read row names
+head(rownames(data))
+
+# read column names
+head(colnames(data))
