@@ -73,5 +73,13 @@ mean_scores_list = []
 for entry in mean_scores:
 	mean_scores_list.append(entry)
 
+# create list of indexes to remove as <0.2 or > 0.8
 ms = mean_scores.to_frame()
 ms_csv = ms.to_csv()
+
+pairs = []
+test = ms_csv.strip('\n').split(',')
+for entry in test:
+	entry.split('\n')
+	if entry[0] <0.2 or entry[0] > 0.8:
+		pairs.append(entry[1])
