@@ -58,12 +58,13 @@ for entry in meth_list[1:]:
 # create dataframe
 df = pandas.DataFrame(matrix, columns=column_names, index=row_names)
 
-# write to csv
-df.to_csv('RAmeth_matrix.csv')
-
-# drop columns GSM1051535 and GSM1051691
+# drop columns for samples GSM1051535 and GSM1051691
 del df['GSM1051535']
 del df['GSM1051691']
+
+# write to csv file so can be easily loaded back in
+df.to_csv('RAmeth_matrix.csv')
+
 
 # calculate mean score of CpG loci (axis=1 means compute mean or row rather than column)
 mean_scores = df.mean(axis=1)
