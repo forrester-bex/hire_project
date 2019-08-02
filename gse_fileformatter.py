@@ -68,3 +68,10 @@ df.to_csv('RAmeth_matrix.csv')
 
 # calculate mean score of CpG loci (axis=1 means compute mean or row rather than column)
 mean_scores = df.mean(axis=1)
+mean_scores_list = []
+
+for entry in mean_scores:
+	mean_scores_list.append(entry)
+
+ms = mean_scores.to_frame()
+ms_csv = ms.to_csv()
