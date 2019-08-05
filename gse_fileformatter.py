@@ -127,16 +127,16 @@ with open('GSE42861_samples.txt', 'r') as samplesheet:
 ### format attributes ###
 ra_status = []
 for entry in attributes[11]:
-	if entry == 'subject: Patient':
+	if 'subject: Patient' in entry:
 		ra_status.append(1)
-	if entry == 'subject: Normal':
+	if 'subject: Normal' in entry:
 		ra_status.append(0)
 
 gender = []
 for entry in attributes[13]:
-	if entry == 'gender: f':
+	if 'gender: f' in entry:
 		gender.append(0)
-	if entry == 'gender: m':
+	if 'gender: m' in entry:
 		gender.append(1)
 
 smoking_history = []
@@ -144,11 +144,13 @@ for entry in attributes[14]:
 	if 'smoking status: occasional' in entry:
 		smoking_history.append((0,0,1))
 	if 'smoking status: ex' in entry:
-		smoking_history.append((0,1,0))
-	if 'smoking status: never' in entry:
 		smoking_history.append((1,0,0))
+	if 'smoking status: never' in entry:
+		smoking_history.append((0,0,0))
 	if 'smoking status: na' in entry:
 		smoking_history.append('na')
+	if 'smoking status: current' in entry:
+		smoking_history.append((0,1,0))
 
 age = []
 for entry in attributes[12]:
@@ -163,6 +165,11 @@ for entry in attributes[1][1:]:
 	patient_id.append(new_id)
 
 
+## also generate batch id ##
+batch_id = []
+for entry in attributes[31]:
+	batch_id.append(entry.strip('"').split('/')[-1].split('_')[1])
+
 column_names = patient_id 
 
 row_names = ['ra status', 'age', 'gender', 'smoking']
@@ -174,5 +181,14 @@ df = pandas.DataFrame(matrix, columns=column_names, index=row_names)
 
 # drop columns for samples GSM1051535 and GSM1051691
 del df['GSM1051535']
-del df['GSM1051691']		
+del df['GSM1051691']
+
+df.to_csv('samplesheet_colremoved.csv')		
+
+# create batch_id table
+batch_id_df = pandas.DataFrame(batch_id[1:], columns=patient_id)
+del batch_id_df['GSM1051535']
+del batch_id_df['GSM1051691']
+df.to_csv('samplebatches.csv')
+
 		

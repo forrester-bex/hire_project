@@ -8,6 +8,7 @@ request an interactive session (16 processors on 1 node for 4 hours):
 qsub -I -l nodes=1:ppn=16,walltime=04:00:00
 module add languages/R-3.5.1-ATLAS-gcc-6.1
 module add tools/git-2.22.0
+module add languages/python-2.7.6
 
 To submit a script job:
 qsub -l nodes=1:ppn=16,walltime=04:00:00 script.ssh
