@@ -35,3 +35,6 @@ samples2 <- samples[-c(11, 167),]
 
 
 df$C <- ifelse(grepl("D", df$A), "yes", "no")
+
+
+### RA DATASET INPUT FILES ###
