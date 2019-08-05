@@ -1,5 +1,7 @@
 inputfile = 'GSE42861_series_matrix.txt'
 
+
+## CREATING THE METHYLATION MATRIX ## 
 # read in file
 with open(inputfile, 'r') as inputf:
 	counter = 1
@@ -91,3 +93,86 @@ for entry in test:
 # remove lines and create new df 
 newdf = df.drop(pairs)
 newdf.to_csv('RAmeth_matrix_linesremoved.csv')
+
+
+
+### CREATING THE SAMPLE SHEET ###
+
+inputfile = 'GSE42861_series_matrix.txt'
+
+
+# read in file
+with open(inputfile, 'r') as inputf:
+	counter = 1
+	# write out to file the lines associated with the sample sheet
+	outfile = 'GSE42861_samples.txt'
+	with open(outfile, 'w') as out:
+		for line in inputf:
+			if counter >= 35 and counter < 69:
+				out.write(line+'\n')
+		
+			counter += 1
+
+
+attributes = []
+with open('GSE42861_samples.txt', 'r') as samplesheet:
+		for line in samplesheet:
+				category = line.split('\n')
+				cat = category[0]
+				if len(cat) > 1:
+					aslist = cat.split('\t')
+					# create list of lists
+					attributes.append(aslist)
+
+### format attributes ###
+ra_status = []
+for entry in attributes[11]:
+	if entry == 'subject: Patient':
+		ra_status.append(1)
+	if entry == 'subject: Normal':
+		ra_status.append(0)
+
+gender = []
+for entry in attributes[13]:
+	if entry == 'gender: f':
+		gender.append(0)
+	if entry == 'gender: m':
+		gender.append(1)
+
+smoking_history = []
+for entry in attributes[14]:
+	if 'smoking status: occasional' in entry:
+		smoking_history.append((0,0,1))
+	if 'smoking status: ex' in entry:
+		smoking_history.append((0,1,0))
+	if 'smoking status: never' in entry:
+		smoking_history.append((1,0,0))
+	if 'smoking status: na' in entry:
+		smoking_history.append('na')
+
+age = []
+for entry in attributes[12]:
+	if "age" in entry:
+		newage = int(entry[6:].strip('"'))
+		age.append(newage)
+
+
+patient_id = []
+for entry in attributes[1][1:]:
+	new_id = entry.strip("'").strip('"')
+	patient_id.append(new_id)
+
+
+column_names = patient_id 
+
+row_names = ['ra status', 'age', 'gender', 'smoking']
+
+matrix = [ra_status, age, gender, smoking_history]	
+
+# create dataframe
+df = pandas.DataFrame(matrix, columns=column_names, index=row_names)
+
+# drop columns for samples GSM1051535 and GSM1051691
+del df['GSM1051535']
+del df['GSM1051691']		
+		
