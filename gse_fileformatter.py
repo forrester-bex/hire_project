@@ -73,11 +73,21 @@ mean_scores_list = []
 for entry in mean_scores:
 	mean_scores_list.append(entry)
 
-# create list of indexes to remove
-to_remove = []
+# create list of indexes to remove as <0.2 or > 0.8
+ms = mean_scores.to_frame()
+ms_csv = ms.to_csv()
 
-# if mean <0.2 or > 0.8 add index to remove list
-for entry in mean_scores_list:
-	index_entry = mean_scores_list.index(entry)
-	if entry <0.2 or entry > 0.8:
-			to_remove.append(index_entry)
+pairs = []
+test = ms_csv.split('\n')
+for entry in test:
+	if entry != '':
+		splitentry = entry.split(',')
+		if float(splitentry[1]) <0.2 or float(splitentry[1]) > 0.8:
+			try:
+				pairs.append(int(splitentry[0]))
+			except ValueError:
+				print entry
+
+# remove lines and create new df 
+newdf = df.drop(pairs)
+newdf.to_csv('RAmeth_matrix_linesremoved.csv')
