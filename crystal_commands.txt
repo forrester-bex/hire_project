@@ -5,7 +5,7 @@ create a screen session:
 screen -S project
 
 request an interactive session (16 processors on 1 node for 4 hours):
- qsub -I -l nodes=1:ppn=16,walltime=04:00:00
+qsub -I -l nodes=1:ppn=16,walltime=04:00:00
 module add languages/R-3.5.1-ATLAS-gcc-6.1
 module add tools/git-2.22.0
 
