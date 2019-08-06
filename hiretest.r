@@ -1,3 +1,7 @@
+#install HIRE
+library("devtools")
+install_github("XiangyuLuo/HIREewas")
+
 # load HIRE
 library("HIREewas")
 
