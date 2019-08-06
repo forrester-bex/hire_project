@@ -93,6 +93,8 @@ for entry in test:
 newdf = df.drop(pairs)
 newdf.to_csv('RAmeth_matrix_linesremoved.csv')
 
+# calculate variance and remove all but highest 10,000 CpGs
+
 
 
 ### CREATING THE SAMPLE SHEET ###
@@ -138,18 +140,37 @@ for entry in attributes[13]:
 	if 'gender: m' in entry:
 		gender.append(1)
 
-smoking_history = []
+smoking_history_occasional = []
+smoking_history_ex = []
+smoking_history_current = []
+
 for entry in attributes[14]:
 	if 'smoking status: occasional' in entry:
-		smoking_history.append((0,0,1))
-	if 'smoking status: ex' in entry:
-		smoking_history.append((1,0,0))
-	if 'smoking status: never' in entry:
-		smoking_history.append((0,0,0))
-	if 'smoking status: na' in entry:
-		smoking_history.append('na')
-	if 'smoking status: current' in entry:
-		smoking_history.append((0,1,0))
+		smoking_history_occasional.append(1)
+		smoking_history_ex.append(0)
+		smoking_history_current.append(0)
+
+	elif 'smoking status: ex' in entry:
+		smoking_history_occasional.append(0)
+		smoking_history_ex.append(1)
+		smoking_history_current.append(0)
+
+	elif 'smoking status: never' in entry:
+		smoking_history_occasional.append(0)
+		smoking_history_ex.append(0)
+		smoking_history_current.append(0)
+
+	elif 'smoking status: na' in entry:
+		smoking_history_occasional.append(0)
+		smoking_history_ex.append(1)
+		smoking_history_current.append(0)
+
+	elif 'smoking status: current' in entry:
+		smoking_history_occasional.append(0)
+		smoking_history_ex.append(0)
+		smoking_history_current.append(1)
+	else:
+		print entry
 
 age = []
 for entry in attributes[12]:
@@ -171,9 +192,9 @@ for entry in attributes[31]:
 
 column_names = patient_id 
 
-row_names = ['ra status', 'age', 'gender', 'smoking']
+row_names = ['ra status', 'age', 'gender', 'smoking_occasional', 'smoking_ex', 'smoking_current']
 
-matrix = [ra_status, age, gender, smoking_history]	
+matrix = [ra_status, age, gender, smoking_history_occasional, smoking_history_ex, smoking_history_current]	
 
 # create dataframe
 samplesdf = pandas.DataFrame(matrix, columns=column_names, index=row_names)
