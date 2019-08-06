@@ -155,7 +155,7 @@ age = []
 for entry in attributes[12]:
 	if "age" in entry:
 		newage = int(entry[6:].strip('"'))
-		age.append(newage)
+		age.append(int(newage))
 
 
 patient_id = []
