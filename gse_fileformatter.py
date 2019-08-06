@@ -56,7 +56,7 @@ for entry in meth_list[1:]:
 
 
 # create dataframe
-df = pandas.DataFrame(matrix, columns=column_names, index=row_names)
+df = pandas.DataFrame(matrix, columns=col_names, index=r_names)
 
 # drop columns for samples GSM1051535 and GSM1051691
 del df['GSM1051535']
@@ -83,10 +83,11 @@ for entry in test:
 	if entry != '':
 		splitentry = entry.split(',')
 		if float(splitentry[1]) <0.2 or float(splitentry[1]) > 0.8:
-			try:
-				pairs.append(int(splitentry[0]))
-			except ValueError:
-				print entry
+			if len(splitentry[0]) > 3:
+				try:
+					pairs.append(splitentry[0])
+				except ValueError:
+					print entry
 
 # remove lines and create new df 
 newdf = df.drop(pairs)
@@ -175,18 +176,17 @@ row_names = ['ra status', 'age', 'gender', 'smoking']
 matrix = [ra_status, age, gender, smoking_history]	
 
 # create dataframe
-df = pandas.DataFrame(matrix, columns=column_names, index=row_names)
+samplesdf = pandas.DataFrame(matrix, columns=column_names, index=row_names)
 
 # drop columns for samples GSM1051535 and GSM1051691
-del df['GSM1051535']
-del df['GSM1051691']
+del samplesdf['GSM1051535']
+del samplesdf['GSM1051691']
 
-df.to_csv('samplesheet_colremoved.csv')		
+samplesdf.to_csv('samplesheet_colremoved.csv')		
 
 # create batch_id table
-batch_id_df = pandas.DataFrame(batch_id[1:], columns=patient_id)
-del batch_id_df['GSM1051535']
-del batch_id_df['GSM1051691']
+batch_id_df = pandas.DataFrame(batch_id[1:], index=patient_id)
+batch_id_df = batch_id_df.drop(['GSM1051535', 'GSM1051691'], axis=0)
 df.to_csv('samplebatches.csv')
 
 		
