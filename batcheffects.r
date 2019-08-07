@@ -13,6 +13,11 @@ http://jtleek.com/genstats/inst/doc/02_13_batch-effects.html
 
 # load combat
 library("sva")
+library(devtools)
+library(Biobase)
+library(sva)
+library(bladderbatch)
+library(snpStats)
 require(data.table)
 
 

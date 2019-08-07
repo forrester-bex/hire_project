@@ -127,7 +127,7 @@ sum(Ometh < 0)
 Ometh[Ometh < 0] <- 0
 
 ################################################################################################
-#Apply HIRE to the simulated EWAS data
+#Apply HIRE to the simulXated EWAS data
 ################################################################################################
 #return list by HIRE
 ret_list <- HIRE(Ometh, X, num_celltype=K)

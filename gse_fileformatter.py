@@ -95,8 +95,30 @@ newdf.to_csv('RAmeth_matrix_linesremoved.csv')
 
 # calculate variance and remove all but highest 10,000 CpGs
 
+variance_scores = newdf.var(axis=1)
+variance = variance_scores.to_csv()
 
+pairs = []
+test = variance.split('\n')
+for entry in test:
+	if entry != '':
+		splitentry = entry.split(',')
+		pairs.append(splitentry)
 
+def Sort(sub_li): 
+    sub_li.sort(key = lambda x: x[1]) 
+    return sub_li 
+
+sorted_list = Sort(pairs)
+least_var = sorted_list[:-10000]
+most_var = sorted_list[-10000:]
+
+to_drop = []
+for entry in least_var:
+	to_drop.append(entry[0])
+
+updated_df = newdf.drop(to_drop)
+updated_df.to_csv('RAmeth_matrix_linesremoved_10Kmostvar.csv')
 ### CREATING THE SAMPLE SHEET ###
 
 inputfile = 'GSE42861_series_matrix.txt'
