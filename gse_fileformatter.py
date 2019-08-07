@@ -93,6 +93,9 @@ for entry in test:
 newdf = df.drop(pairs)
 newdf.to_csv('RAmeth_matrix_linesremoved.csv')
 
+
+### ADJUST FOR BATCH EFFECTS IN R HERE THEN RE-LOAD ###
+
 # calculate variance and remove all but highest 10,000 CpGs
 
 variance_scores = newdf.var(axis=1)
@@ -230,6 +233,6 @@ samplesdf.to_csv('samplesheet_colremoved.csv')
 # create batch_id table
 batch_id_df = pandas.DataFrame(batch_id[1:], index=patient_id)
 batch_id_df = batch_id_df.drop(['GSM1051535', 'GSM1051691'], axis=0)
-df.to_csv('samplebatches.csv')
+batch_id_df.to_csv('samplebatches.csv')
 
 		
