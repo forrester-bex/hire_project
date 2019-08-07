@@ -94,11 +94,13 @@ newdf = df.drop(pairs)
 newdf.to_csv('RAmeth_matrix_linesremoved.csv')
 
 
-### ADJUST FOR BATCH EFFECTS IN R HERE THEN RE-LOAD ###
+### ADJUST FOR BATCH EFFECTS IN R (batch effects.r) HERE THEN RE-LOAD ###
+adjusted_df = pandas.read_csv('batcheffectsadjusted.csv')
+
 
 # calculate variance and remove all but highest 10,000 CpGs
 
-variance_scores = newdf.var(axis=1)
+variance_scores = adjusted_df.var(axis=1)
 variance = variance_scores.to_csv()
 
 pairs = []
@@ -120,7 +122,7 @@ to_drop = []
 for entry in least_var:
 	to_drop.append(entry[0])
 
-updated_df = newdf.drop(to_drop)
+updated_df = adjusted_df.drop(to_drop)
 updated_df.to_csv('RAmeth_matrix_linesremoved_10Kmostvar.csv')
 ### CREATING THE SAMPLE SHEET ###
 
