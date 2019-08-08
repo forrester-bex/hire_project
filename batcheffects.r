@@ -8,7 +8,7 @@ BiocManager::install("sva")
 BiocManager::install("bladderbatch")
 
 # load sva
-library('sva')
+library(sva)
 
 # load in the data 
 samples <- data.matrix(read.csv('samplesheet_colremoved.csv', row.names = 1))

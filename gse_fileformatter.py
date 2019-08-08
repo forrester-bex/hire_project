@@ -95,7 +95,7 @@ newdf.to_csv('RAmeth_matrix_linesremoved.csv')
 
 
 ### ADJUST FOR BATCH EFFECTS IN R (batch effects.r) HERE THEN RE-LOAD ###
-adjusted_df = pandas.read_csv('batcheffectsadjusted.csv')
+adjusted_df = pandas.read_csv('batcheffectsadjusted.csv', index_col=0)
 
 
 # calculate variance and remove all but highest 10,000 CpGs
@@ -176,26 +176,25 @@ for entry in attributes[14]:
 		smoking_history_occasional.append(1)
 		smoking_history_ex.append(0)
 		smoking_history_current.append(0)
+		smoking_history_never.append(0)
 
 	elif 'smoking status: ex' in entry:
 		smoking_history_occasional.append(0)
 		smoking_history_ex.append(1)
 		smoking_history_current.append(0)
-
-	elif 'smoking status: never' in entry:
-		smoking_history_occasional.append(0)
-		smoking_history_ex.append(0)
-		smoking_history_current.append(0)
+		moking_history_never.append(0)
 
 	elif 'smoking status: na' in entry:
 		smoking_history_occasional.append(0)
 		smoking_history_ex.append(1)
 		smoking_history_current.append(0)
+		moking_history_never.append(0)
 
 	elif 'smoking status: current' in entry:
 		smoking_history_occasional.append(0)
 		smoking_history_ex.append(0)
 		smoking_history_current.append(1)
+		moking_history_never.append(0)
 	else:
 		print entry
 
