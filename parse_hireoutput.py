@@ -17,4 +17,12 @@ df = df.set_index("cpg")
 celltypes = [df[df.columns[0]], df[df.columns[1]], df[df.columns[2]], df[df.columns[3]],
 			 df[df.columns[4]], df[df.columns[5]]]
 
+sorted_dfs = []
+for celltype in celltypes:
+	sorted_celltype = celltype.sort_values(ascending=False)
+	sorted_dfs.append(sorted_celltype[:100])
 
+counter = 1
+for entry in sorted_dfs:
+	entry.to_csv("celltype"+str(counter)+'.csv')
+	counter += 1
