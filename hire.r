@@ -26,6 +26,26 @@ riskCpGpattern(ret_list$pvalues[seq_len(100), 6+c(2,1,3)],
     main_title="Detected association pattern\n with age", hc_row_ind = FALSE)
 dev.off()
 
+pdf("RA_gender.pdf")
+riskCpGpattern(ret_list$pvalues[seq_len(100), 12+c(2,1,3)],
+	main_title="Detected association pattern\n with age", hc_row_ind=FALSE)
+dev.off()
+
+pdf("RA_smoking_occasional.pdf")
+riskCpGpattern(ret_list$pvalues[seq_len(100), 18+c(2,1,3)],
+	main_title="Detected association pattern\n with occasional smoking", hc_row_ind=FALSE)
+dev.off()
+
+pdf("RA_exsmoker.pdf")
+riskCpGpattern(ret_list$pvalues[seq_len(100), 24+c(2,1,3)],
+	main_title="Detected association pattern\n with ex smoking", hc_row_ind=FALSE)
+dev.off()
+
+pdf("RA_nonsmoker.pdf")
+riskCpGpattern(ret_list$pvalues[seq_len(100), 12+c(2,1,3)],
+	main_title="Detected association pattern\n with age", hc_row_ind=FALSE)
+dev.off()
+
 #a p-value matrix from the uniform distribution
 #write output to pdf
     pvalues <- matrix(runif(600), 100, 6)
@@ -34,3 +54,7 @@ dev.off()
     riskCpGpattern(pvalues,
     main_title="An example", hc_row_ind = FALSE)
     dev.off()
+
+
+  # write HIRE output to file
+  capture.output(summary(ret_list), file = "RA_HIREoutput.txt")
