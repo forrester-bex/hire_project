@@ -176,25 +176,21 @@ for entry in attributes[14]:
 		smoking_history_occasional.append(1)
 		smoking_history_ex.append(0)
 		smoking_history_current.append(0)
-		smoking_history_never.append(0)
 
 	elif 'smoking status: ex' in entry:
 		smoking_history_occasional.append(0)
 		smoking_history_ex.append(1)
 		smoking_history_current.append(0)
-		moking_history_never.append(0)
 
 	elif 'smoking status: na' in entry:
 		smoking_history_occasional.append(0)
 		smoking_history_ex.append(1)
 		smoking_history_current.append(0)
-		moking_history_never.append(0)
 
 	elif 'smoking status: current' in entry:
 		smoking_history_occasional.append(0)
 		smoking_history_ex.append(0)
 		smoking_history_current.append(1)
-		moking_history_never.append(0)
 	else:
 		print entry
 
