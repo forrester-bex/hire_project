@@ -25,3 +25,11 @@ ret_list <- HIRE(meth_data, samples, num_celltype=6)
 
   # write HIRE output to file
   capture.output(summary(ret_list), file = "RA_HIREoutput.txt")
+
+
+  # load rds
+  hire_output <- loadRDS("hireoutput.rds")
+
+  mu <- hire_output[[2]]
+
+  write.csv(mu, file="RA_HIREoutputmu.csv")

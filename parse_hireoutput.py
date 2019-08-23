@@ -1,7 +1,7 @@
 import pandas 
 import glob
 
-df = pandas.read_csv("RA_HIRE_pvalues.csv")
+df = pandas.read_csv("RA_HIREoutputmu.csv")
 
 # add row names
 matrix = pandas.read_csv('RAmeth_matrix_linesremoved_10Kmostvar.csv')
@@ -29,7 +29,9 @@ with open(rankedlist, 'r') as r:
 		ranked.append(cpg)
 
 # create a list of the top 100 discriminatory cpgs
-top = ranked[:100]
+#top = ranked[:100]
+top = ranked[:50]
+
 
 # convert dfs to csv files
 counter = 1
@@ -63,3 +65,22 @@ counter = 1
 for entry in finalframes:
 	entry.to_csv("celltype"+str(counter)+'top100.csv')
 	counter += 1
+
+celltypes = []
+cpgs = []
+for entry in finaldata:
+	data = []
+	for cpg in entry:
+		data.append(cpg[1])
+		if cpg[0] not in cpgs:
+			cpgs.append(cpg[0])
+	celltypes.append(data)
+
+# create joint matrix
+joint_df = pandas.DataFrame(celltypes)
+joint_df = joint_df.transpose()
+joint_df['cpgs'] = cpgs
+joint_df = joint_df.set_index('cpgs')
+joint_df.columns=['celltype1', 'celltype2', 'celltype3', 'celltype4', 'celltype5', 'celltype6']
+# export to csv
+joint_df.to_csv("hire_allcelltypes_top100discrim.csv")
